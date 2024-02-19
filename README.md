@@ -62,7 +62,7 @@ Deve ser utilizada quando há a impossibilidade da captura do código de barras 
 ##
 Abaixo, a composição da linha digitável:
 
-![This is an image](~/wwwroot/img/boleto1.png)
+![This is an image](/wwwroot/img/boleto1.png)
 
 Referencia: https://boletocloud.uservoice.com/knowledgebase/articles/321057-o-boleto-partes-principais em 23/04/2020.
 
@@ -78,4 +78,4 @@ Para se obter o fator de vencimento se faz necessário apenas calcular o número
 
 A seguir alguns exemplos:
 
-![This is an image](~/wwwroot/img/boleto2.png)
+![This is an image](/wwwroot/img/boleto2.png)
