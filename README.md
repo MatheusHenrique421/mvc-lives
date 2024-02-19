@@ -19,7 +19,7 @@ Use sua criatividade para expandir a ideia.
   * Acessar o cadastro de Instrutores 
   * Acessar o cadastro de Inscritos 
   * Acessar o cadastro de Lives 
-  * Acessar o cadastro de Inscrições.
+  * Acessar o cadastro de Inscrições
 
 ## `Parte 2 - Cadastros básicos, Realizar CRUD (Create, Read, Update e Delete)`
 - **Cadastro de Instrutor. Um instrutor deve conter:**
@@ -62,7 +62,7 @@ Deve ser utilizada quando há a impossibilidade da captura do código de barras 
 ##
 Abaixo, a composição da linha digitável:
 
-![This is an image](~/img/boleto1.png)
+![This is an image](/wwwroot/img/boleto1.png)
 
 Referencia: https://boletocloud.uservoice.com/knowledgebase/articles/321057-o-boleto-partes-principais em 23/04/2020.
 
@@ -78,4 +78,4 @@ Para se obter o fator de vencimento se faz necessário apenas calcular o número
 
 A seguir alguns exemplos:
 
-![This is an image](~/img/boleto2.png)
+![This is an image](/wwwroot/img/boleto2.png)
