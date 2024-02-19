@@ -1,0 +1,65 @@
+﻿@model mvc_lives.Models.Live
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 align="center">Cadastro de Lives</h1>
+
+@* <h4>Live</h4> *@
+<hr />
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group">
+            <label asp-for="InstrutorID" class="control-label"></label>
+            <select asp-for="InstrutorID" class ="form-control" asp-items="ViewBag.InstrutorID"></select>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Instrutor" class="control-label">Instrutor:</label>
+                <select asp-for="InstrutorID" class="form-control" asp-items="ViewBag.InstrutorNome">
+                    <option selected disabled value="">Selecione</option>
+                </select>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Nome" class="control-label">Nome da Live:</label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Descricao" class="control-label">Descrição da Live:</label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="HoraInicio" class="control-label">Horário:</label>
+                <input asp-for="HoraInicio" class="form-control" />
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="DuracaoMin" class="control-label">Duração(minutos):</label>
+                <input asp-for="DuracaoMin" class="form-control" />
+                <span asp-validation-for="DuracaoMin" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="ValorInscricao" class="control-label">Valor da Inscrição:</label>
+                <input asp-for="ValorInscricao" class="form-control" placeholder="R$" />
+                <span asp-validation-for="ValorInscricao" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row" align="right">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

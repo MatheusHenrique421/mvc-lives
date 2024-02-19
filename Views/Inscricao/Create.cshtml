@@ -1,0 +1,59 @@
+﻿@model mvc_lives.Models.Inscricao
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Inscricao</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Live" class="control-label">Live:</label>
+                <select asp-for="LiveID" class ="form-control" asp-items="ViewBag.LiveNome">
+                <option selected disabled value="">Selecione</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorInscricao" class="control-label"></label>
+                <input asp-for="ValorInscricao" class="form-control" />
+                <span asp-validation-for="ValorInscricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inscrito" class="control-label">Inscrito</label>
+                <select asp-for="InscritoID" class ="form-control" asp-items="ViewBag.InscritoNome">
+                    <option selected disabled value="">Selecione</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataVencimento" class="control-label"></label>
+                <input asp-for="DataVencimento" class="form-control" />
+                <span asp-validation-for="DataVencimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StatusPagamento" class="control-label"></label>
+                <select asp-for="StatusPagamento" class="form-control">
+                    <option selected disabled value="">Selecione</option>
+                    <option value="Pago">Pago</option>
+                    <option value="NaoPago">Não Pago</option>
+                </select>
+                <span asp-validation-for="StatusPagamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

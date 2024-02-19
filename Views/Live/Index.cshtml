@@ -1,0 +1,65 @@
+﻿@model IEnumerable<mvc_lives.Models.Live>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrutor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Descricao) *@ Descrição
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.HoraInicio) *@Hora Início
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.DuracaoMin) *@ Duração
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.ValorInscricao) *@ Valor 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instrutor.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DuracaoMin) Minutos
+            </td>
+            <td>
+                R$ @Html.DisplayFor(modelItem => item.ValorInscricao)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.LiveID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.LiveID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.LiveID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
