@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using mvc_lives.Models;
+using Microsoft.AspNetCore.Mvc;
 using mvc_lives.Models.Data;
+using mvc_lives.Models;
+
 
 namespace mvc_lives.Controllers
 {
@@ -23,6 +20,7 @@ namespace mvc_lives.Controllers
         public async Task<IActionResult> Index()
         {
             var contexto = _context.Inscricoes.Include(i => i.Inscrito).Include(i => i.Live);
+
             return View(await contexto.ToListAsync());
         }
 
@@ -43,6 +41,21 @@ namespace mvc_lives.Controllers
                 return NotFound();
             }
 
+            var liveNome = _context.Live.Select(l => new
+            {
+                LiveID = l.LiveID,
+                LiveNome = l.Nome
+            }).ToList();
+
+            var inscritoNome = _context.Inscrito.Select(i => new
+            {
+                InscritoID = i.InscritoID,
+                InscritoNome = i.Nome
+            }).ToList();
+
+            ViewBag.LiveNome = new MultiSelectList(liveNome, "LiveID", "LiveNome");
+            ViewBag.InscritoNome = new MultiSelectList(inscritoNome, "InscritoID", "InscritoNome");
+
             return View(inscricao);
         }
 
@@ -52,23 +65,33 @@ namespace mvc_lives.Controllers
             ViewData["InscritoID"] = new SelectList(_context.Inscrito, "InscritoID", "InscritoID");
             ViewData["LiveID"] = new SelectList(_context.Live, "LiveID", "LiveID");
 
-            var inscritoNome = _context.Inscrito.Select(i => new
-            {
-                InscritoID = i.InscritoID,
-                InscritoNome = i.Nome
-            }).ToList();
-
-            ViewBag.InscritoNome = new MultiSelectList(inscritoNome, "InscritoID", "InscritoNome");
-
             var liveNome = _context.Live.Select(l => new
             {
                 LiveID = l.LiveID,
                 LiveNome = l.Nome
             }).ToList();
 
+            var inscritoNome = _context.Inscrito.Select(i => new
+            {
+                InscritoID = i.InscritoID,
+                InscritoNome = i.Nome
+            }).ToList();
+
             ViewBag.LiveNome = new MultiSelectList(liveNome, "LiveID", "LiveNome");
+            ViewBag.InscritoNome = new MultiSelectList(inscritoNome, "InscritoID", "InscritoNome");
 
             return View();
+        }
+
+        //GET: Inscricao/Create -> Ao selecionar a live, ele insere o valor da inscrição definido no cadastro de live.
+        public async Task<decimal> GetValorInscricao(int liveID)
+        {
+            var valorInscricao = _context.Live
+                .Where(l => l.LiveID == liveID)
+                .Select(l => l.ValorInscricao)
+                .FirstOrDefault();
+
+            return valorInscricao;
         }
 
         // POST: Inscricao/Create
@@ -78,8 +101,16 @@ namespace mvc_lives.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("InscricaoID,LiveID,ValorInscricao,InscritoID,DataVencimento,StatusPagamento")] Inscricao inscricao)
         {
+
             if (ModelState.IsValid)
             {
+                var valorInscricao = _context.Live
+               .Where(l => l.LiveID == inscricao.LiveID)
+               .Select(l => l.ValorInscricao)
+               .FirstOrDefault();
+
+                inscricao.ValorInscricao = valorInscricao;
+
                 _context.Add(inscricao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -102,6 +133,25 @@ namespace mvc_lives.Controllers
             {
                 return NotFound();
             }
+
+            var inscritoNome = _context.Inscrito.Select(i => new
+            {
+                InscritoID = i.InscritoID,
+                InscritoNome = i.Nome
+            }).ToList();
+
+            ViewBag.InscritoNome = new MultiSelectList(inscritoNome, "InscritoID", "InscritoNome");
+
+
+            var liveNome = _context.Live.Select(l => new
+            {
+                LiveID = l.LiveID,
+                LiveNome = l.Nome,
+                LiveValorInscricao = l.ValorInscricao
+            }).ToList();
+
+            ViewBag.LiveNome = new MultiSelectList(liveNome, "LiveID", "LiveNome");
+
             ViewData["InscritoID"] = new SelectList(_context.Inscrito, "InscritoID", "InscritoID", inscricao.InscritoID);
             ViewData["LiveID"] = new SelectList(_context.Live, "LiveID", "LiveID", inscricao.LiveID);
             return View(inscricao);
@@ -114,6 +164,7 @@ namespace mvc_lives.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("InscricaoID,LiveID,ValorInscricao,InscritoID,DataVencimento,StatusPagamento")] Inscricao inscricao)
         {
+
             if (id != inscricao.InscricaoID)
             {
                 return NotFound();
@@ -123,6 +174,12 @@ namespace mvc_lives.Controllers
             {
                 try
                 {
+                    // Obter o valor da inscrição com base no cadastro de live.
+                    var liveValorInscricao = GetValorInscricao(inscricao.LiveID);
+
+                    // Atribuir o valor obtido ao campo ValorInscricao
+                    inscricao.ValorInscricao = liveValorInscricao.Result;
+
                     _context.Update(inscricao);
                     await _context.SaveChangesAsync();
                 }

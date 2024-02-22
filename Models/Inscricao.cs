@@ -37,17 +37,28 @@ namespace mvc_lives.Models
         public Inscrito? Inscrito { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
         [Column("DataVencimento")]
         [Display(Name = "DataVencimento")]
         public DateTime? DataVencimento { get; set; }
 
         [Column("StatusPagamento")]
         [Display(Name = "Status Pagamento")]
-        public StatusPagmtoEnum StatusPagamento { get; set; }
+        private StatusPagmtoEnum _statusPagamento;
+
+        public StatusPagmtoEnum StatusPagamento
+        {
+            get { return _statusPagamento; }
+            set { _statusPagamento = value; }
+        }
+
+        [NotMapped]
+        public string StatusPagamentoDescription => _statusPagamento.GetDescription();
+
         [NotMapped]
         public IEnumerable<Inscrito>? Inscritos { get; set; }
+
         [NotMapped]
-        public IEnumerable<Live>? Lives { get; set; }
+        public List<Live>? Lives { get; set; }
     }
 }

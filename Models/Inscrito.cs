@@ -16,7 +16,7 @@ namespace mvc_lives.Models
         public string? Nome { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
         [Display(Name = "DataNascimento")]
         [Column("DataNascimento")]
         public DateTime DataNascimento { get; set; }

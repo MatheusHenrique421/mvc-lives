@@ -50,9 +50,9 @@ namespace mvc_lives.Controllers
         // GET: Live/Create
         public IActionResult Create()
         {
-            ViewData["InstrutorID"] = new SelectList(_context.Instrutor, "InstrutorID", "InstrutorID");
+            ViewData["InstrutorID"] = new SelectList(_context.Instrutor, "InstrutorID", "Nome");
 
-            var instrutorNome = _context.Live.Select(l => new
+            var instrutorNome = _context.Instrutor.Select(l => new
             {
                 InstrutorID = l.InstrutorID,
                 InstrutorNome = l.Nome

@@ -9,4 +9,5 @@ namespace mvc_lives.Models.Enum
         [Description("Não Pago")]
         NaoPago = 2
     }
+
 }

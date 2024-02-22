@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 
 namespace mvc_lives.Models
 {
@@ -29,6 +28,8 @@ namespace mvc_lives.Models
         [Column("Descicao")]
         public string? Descricao { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm}", ApplyFormatInEditMode = false)]
         [Display(Name = "HoraInicio")]
         [Column("HoraInicio")]
         public DateTime HoraInicio { get; set; }
@@ -39,26 +40,7 @@ namespace mvc_lives.Models
 
         [Display(Name = "ValorInscricao")]
         [Column("ValorInscricao")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
-        public decimal ValorInscricao
-        {
-            get
-            {
-                if (decimal.TryParse(ValorInscricaoFormatado, NumberStyles.Number, CultureInfo.GetCultureInfo("pt-BR"), out decimal valor))
-                {
-                    return valor;
-                }
-                return 0; // ou algum valor padrão, dependendo do que faz sentido para o seu caso
-            }
-            set
-            {
-                ValorInscricaoFormatado = value.ToString("N2", CultureInfo.GetCultureInfo("pt-BR"));
-            }
-        }
-
-        [NotMapped] // Não mapear isso para o banco de dados diretamente
-        public string ValorInscricaoFormatado { get; set; }
-
+        public decimal ValorInscricao { get; set; }
 
         [NotMapped]
         public IEnumerable<Instrutor>? ListaDeInstrutor { get; set; }
@@ -69,7 +51,6 @@ namespace mvc_lives.Models
         [NotMapped]
         public ICollection<Live>? Lives { get; set; }
 
-        // Relacionamento com inscrições
         [NotMapped]
         public ICollection<Inscricao>? Inscricoes { get; set; }
 

@@ -15,17 +15,17 @@
             <input type="hidden" asp-for="InscricaoID" />
             <div class="form-group">
                 <label asp-for="LiveID" class="control-label"></label>
-                <select asp-for="LiveID" class="form-control" asp-items="ViewBag.LiveID"></select>
+                <select asp-for="LiveID" ID="cmbLiveNome" class="form-control" asp-items="ViewBag.LiveNome"></select>
                 <span asp-validation-for="LiveID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ValorInscricao" class="control-label"></label>
-                <input asp-for="ValorInscricao" class="form-control" />
+                <input asp-for="ValorInscricao" class="form-control" ID="txtLiveValorInscricao" disabled />
                 <span asp-validation-for="ValorInscricao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="InscritoID" class="control-label"></label>
-                <select asp-for="InscritoID" class="form-control" asp-items="ViewBag.InscritoID"></select>
+                <select asp-for="InscritoID" class="form-control" asp-items="ViewBag.InscritoNome"></select>
                 <span asp-validation-for="InscritoID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,7 +35,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="StatusPagamento" class="control-label"></label>
-                <select asp-for="StatusPagamento" class="form-control"></select>
+                <select asp-for="StatusPagamento" class="form-control">
+                    <option selected disabled value="">Selecione</option>
+                    <option value="Pago">Pago</option>
+                    <option value="NaoPago">Não Pago</option>
+                </select>
                 <span asp-validation-for="StatusPagamento" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,5 +54,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
